@@ -30,12 +30,13 @@ public class AutoUpdateService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, @IntDef(value = {Service.START_FLAG_REDELIVERY, Service.START_FLAG_RETRY}, flag = true) int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         updateWeather();
         updateBingPic();
         AlarmManager manager=(AlarmManager) getSystemService(ALARM_SERVICE);
         int anHour=8*60*60*1000;
-        long triggerAtTime= SystemClock.elapsedRealtime()+anHour;
+        int anMinute=60*1000;
+        long triggerAtTime= SystemClock.elapsedRealtime()+anMinute;
         Intent i=new Intent(this,AutoUpdateService.class);
         PendingIntent pi=PendingIntent.getService(this,0,i,0);
         manager.cancel(pi);
